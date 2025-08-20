@@ -10,7 +10,8 @@ class LLMApi_summary:
         load_dotenv()
         
         self.verbose = verbose
-        self.client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=os.getenv("API_KEY"))
+        self.client = OpenAI(base_url=os.getenv("BASE_URL"),
+                             api_key=os.getenv("API_KEY"))
         
         self.model = os.getenv("MODEL")
         self.api_extra_headers = ""
