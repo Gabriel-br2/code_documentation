@@ -43,6 +43,7 @@ def main():
 
         📖 Project Description — A clear and concise description of the project's purpose.
         ⚙️ System Behavior — A summary of how the system works, including main flows and interactions.
+        💻 Software Interface — An example of how software should be implemented by calling its classes and functions (only include if applicable, if not skip to the next topic).
         📂 Code Structure — Organization of the files and modules in the repository.
         🔌 Hardware Interface — Components used and how the system interacts with the hardware (only include if applicable, if not skip to the next topic). 
         📐 Circuit Diagram — Explanation of the circuit and its elements (only include if applicable, if not skip to the next topic).
