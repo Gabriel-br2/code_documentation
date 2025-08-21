@@ -20,7 +20,8 @@ class Agent:
     def request_str(self) -> str:
         request = self.client.chat.completions.create(
             model=self.model, 
-            messages=[{"role": "user", "content": self.payload}],
+            messages=[{"role": "user", 
+                       "content": self.payload}],
         )
         
         self.debug_print(request.usage)
@@ -33,7 +34,9 @@ class Agent:
     def request_json(self) -> str:
         request = self.client.chat.completions.create(
             model=self.model, 
-            messages=[{"role": "user", "content": self.payload}],
+            messages=[{"role": "user", 
+                       "content": self.payload}],
+            
             response_format={"type": "json_object"},
         )
         
