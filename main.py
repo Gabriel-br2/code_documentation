@@ -60,7 +60,7 @@ def main():
     dirAnalyser = JSON_gen()
     
     json_output = dirAnalyser.save_to_json(current_dir)
-    print(json_output)
+    # print(json_output)
     
     api.generate(msg=json_output)
     
