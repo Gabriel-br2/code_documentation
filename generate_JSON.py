@@ -124,7 +124,7 @@ class JSON_gen:
             print(msg)
 
 if __name__ == "__main__":
-    analyzer = DirectoryAnalyzer()
+    analyzer = JSON_gen()
     current_dir = os.getcwd()
     json_output = analyzer.save_to_json(current_dir)
 
