@@ -1,23 +1,22 @@
 #!/usr/bin/env python
-import json
-from dotenv import load_dotenv
 import os
+import json
+from agent import Agent
+from dotenv import load_dotenv
 
-from openai import OpenAI
-
-class LLMApi_summary:
+class code_summary:
     def __init__(self, verbose):
         load_dotenv()
-        
         self.verbose = verbose
-        self.client = OpenAI(base_url=os.getenv("BASE_URL"),
-                             api_key=os.getenv("API_KEY"))
         
-        self.model = os.getenv("MODEL")
-        self.api_extra_headers = ""
+        base_url = os.getenv("BASE_URL")
+        api_key  = os.getenv("API_KEY")
+        model    = os.getenv("MODEL")
+        
+        self.Agent_summary_gen = Agent(base_url, api_key, model)        
 
     def setInitialContext(self, context: str):
-        self.context = context
+        self.Agent_summary_gen.context = context
 
     def getReturnJsonPattern(self) -> dict:
         root = dict()
@@ -28,47 +27,15 @@ class LLMApi_summary:
         
         return root
 
+    def request(self):
+        return self.Agent_summary_gen.request_json()
+
     def generate(self, msg: dict):
-        self.payload = "<context>\n"
-        self.payload += self.context
-        self.payload += "\nFollow the bellow json to answer:\n"
-        self.payload += json.dumps(self.getReturnJsonPattern(), indent=2)
-        self.payload += "\n</context>\n"
-        self.payload += "<file>\n"
-        self.payload += json.dumps(msg, indent=2)
-        self.payload += "\n</file>\n"
-
-    def request(self) -> str:
-        request = self.client.chat.completions.create(
-            model=self.model, 
-            messages=[{"role": "user", "content": self.payload}],
-            response_format={"type": "json_object"},
-        )
-        
-        self.debug_print(request.usage)
-        response = request.choices[0].message.content 
-        self.debug_print(response)
-        self.debug_print("==============================")
-        return response
-    
-    def debug_print(self, msg):
-        if self.verbose:
-            print(msg)
-
-def main():
-    api = LLMApi_summary()
-
-    api.setInitialContext(
-        "You are acting as a code review expert. Analyze the following Python code file and provide a clear and concise summary. I want it to be short, very summarized"
-    )
-
-    with open("configpy.py", "r", encoding="utf-8", errors="ignore") as f:
-        content_full = f.read()
-                        
-    api.generate(msg=content_full)
-
-    print(api.request())
-
-
-if __name__ == "__main__":
-    main()
+        self.Agent_summary_gen.payload = "<context>\n"
+        self.Agent_summary_gen.payload += self.Agent_summary_gen.context
+        self.Agent_summary_gen.payload += "\nFollow the bellow json to answer:\n"
+        self.Agent_summary_gen.payload += json.dumps(self.getReturnJsonPattern(), indent=2)
+        self.Agent_summary_gen.payload += "\n</context>\n"
+        self.Agent_summary_gen.payload += "<file>\n"
+        self.Agent_summary_gen.payload += json.dumps(msg, indent=2)
+        self.Agent_summary_gen.payload += "\n</file>\n"

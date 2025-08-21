@@ -1,23 +1,21 @@
 import os
 import json
-from generate_summary import LLMApi_summary
+from generate_summary import code_summary
 
 
-class DirectoryAnalyzer:
+class JSON_gen:
     def __init__(self, verbose=False, gitignore_path=".gitignore", venv_path=".venv_path"):
         self.verbose = verbose
         self.gitignore_path = gitignore_path
         self.venv_path = venv_path
 
-        # Inicializa o gerador de sumários
-        self.summary_gen = LLMApi_summary(verbose)
+        self.summary_gen = code_summary(verbose)
         self.summary_gen.setInitialContext(
             "You are acting as a code review expert. Analyze the following Python code file and provide a clear and concise summary. I want it to be short, very summarized"
         )
         
         self.counter = 0
 
-    # --- MÉTODOS AUXILIARES ---
     def _is_in_gitignore(self, item):
         if not os.path.exists(self.gitignore_path):
             return False
@@ -43,7 +41,6 @@ class DirectoryAnalyzer:
         except Exception as e:
             return f"file cannot be readable: {e}"
 
-    # --- MÉTODO PRINCIPAL ---
     def get_structure(self, path, root_dir=None, counter=None):
         if root_dir is None:
             root_dir = path
@@ -58,7 +55,6 @@ class DirectoryAnalyzer:
 
         try:
             for item in os.listdir(path):
-                # --- FILTROS ---
                 if item.startswith("."):  
                     self.debug_print(f"Ignoring hidden: {item}")
                     continue
