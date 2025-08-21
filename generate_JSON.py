@@ -14,6 +14,8 @@ class DirectoryAnalyzer:
         self.summary_gen.setInitialContext(
             "You are acting as a code review expert. Analyze the following Python code file and provide a clear and concise summary. I want it to be short, very summarized"
         )
+        
+        self.counter = 0
 
     # --- MÉTODOS AUXILIARES ---
     def _is_in_gitignore(self, item):
@@ -45,13 +47,6 @@ class DirectoryAnalyzer:
     def get_structure(self, path, root_dir=None, counter=None):
         if root_dir is None:
             root_dir = path
-            
-        if counter is None:
-            total_files = sum(
-                len([f for f in files if not f.startswith(".")])
-                for _, _, files in os.walk(path)
-            )
-            counter = {"current": 0, "total": total_files}
 
         structure = {
             "name": os.path.basename(path) or path,
@@ -86,16 +81,23 @@ class DirectoryAnalyzer:
                     structure["children"].append(self.get_structure(item_path, root_dir))
 
                 elif os.path.isfile(item_path):
-                    counter["current"] += 1
-                    print(f"[{counter['current']}] Processando: {item}")
+                    self.counter += 1
+                    print(f"[{self.counter}] Processing: {item}")
 
-                    content = self._summarize_file(item_path)
+                    extension = os.path.splitext(item)[1]
+                    
+                    if extension in [".py", ".txt", ".cpp", ".c", ".js", ".html"]:
+                        content = self._summarize_file(item_path)
+                    else:
+                        content = "extension unreadable"
+
+
                     structure["children"].append({
                         "name": item,
                         "path": os.path.abspath(item_path),
                         "relative_path": os.path.relpath(item_path, root_dir),
                         "type": "file",
-                        "extension": os.path.splitext(item)[1],
+                        "extension": extension,
                         "content": content
                     })
 
