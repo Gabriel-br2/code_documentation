@@ -1,8 +1,4 @@
 #!/usr/bin/env python
-import os
-import json
-from tabnanny import verbose
-
 from openai import OpenAI
 
 class Agent:
