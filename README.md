@@ -126,12 +126,12 @@ code_documentation/
 
 ```json
 {
-   "name": file name,
-   "relative_path": file relative path,
-   "type": is file or is directory ,
-   "extension": file extension,
-   "content": file summary(if file),
-   "children": Child files (if directory) 
+   "name": "file name",
+   "relative_path": "file relative path",
+   "type": "is file or is directory",
+   "extension": "file extension",
+   "content": "file summary(if file)",
+   "children": "Child files (if directory)" 
 }
 ```
 
