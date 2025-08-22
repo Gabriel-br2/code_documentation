@@ -36,7 +36,7 @@ Clone the repository using Git, and install the required packages:
 
 
 ```bash
-git clone https://github.com/Gabriel-br2/code_doc.git
+git clone https://github.com/Gabriel-br2/code_documentation.git
 pip install -r ~/Your_path/code_doc/requirements.txt
 ```
 
@@ -62,7 +62,7 @@ So you can run the tool in any repository on your computer:
 1. **Create a `.sh` file to run the Python script**:
 
 ```bash
-nano code_doc.sh
+nano code_documentation.sh
 ```
 
 2. **Paste the following content**:
@@ -71,14 +71,14 @@ nano code_doc.sh
 #!/bin/bash
 
 # Absolute path to the Python script
-PY_SCRIPT="$HOME/Your_path/code_doc/main.py"
+PY_SCRIPT="$HOME/Your_path/code_documentation/main.py"
 python3 "$PY_SCRIPT"
 ```
 
 3. **Make the script executable**:
 
 ```bash
-chmod +x code_doc.sh
+chmod +x code_documentation.sh
 ```
 
 4. **Add the script to your `.bashrc`**
@@ -91,7 +91,7 @@ nano ~/.bashrc
 Add the following line at the end of the file:
 
 ```bash
-source ~/Your_path/code_doc.sh
+source ~/Your_path/code_documentation.sh
 ```
 
 5. **Reload your `.bashrc`** to apply changes:
@@ -104,7 +104,7 @@ source ~/.bashrc
 Now you can execute the tool from any terminal session using:
 
 ```bash
-code_doc.sh
+code_documentation.sh
 ```
 
 
@@ -113,7 +113,7 @@ code_doc.sh
 ## 📂 Code Structure
 
 ```
-code_doc/
+code_documentation/
 ├── agent.py              # Handles AI model API communication
 ├── generate_summary.py   # Summarizes code files using AI
 ├── main.py               # Main orchestration of README generation
@@ -126,12 +126,12 @@ code_doc/
 
 ```json
 {
-   "name": file name,
-   "relative_path": file relative path,
-   "type": is file or is directory ,
-   "extension": file extension,
-   "content": file summary(if file),
-   "children": Child files (if directory) 
+   "name": "file name",
+   "relative_path": "file relative path",
+   "type": "is file or is directory",
+   "extension": "file extension",
+   "content": "file summary(if file)",
+   "children": "Child files (if directory)" 
 }
 ```
 
