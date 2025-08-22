@@ -1,39 +1,11 @@
 #!/usr/bin/env python
-import json
-from dotenv import load_dotenv
 import os
-
-from agent import Agent
+from generate_README import README_gen
 from generate_JSON import JSON_gen
-
-class generate_README:
-    def __init__(self, verbose=False):
-        load_dotenv()
-        self.verbose = verbose
-        
-        base_url=os.getenv("BASE_URL")
-        api_key=os.getenv("API_KEY")
-        model = os.getenv("MODEL")
-        
-        self.Agent_gen_README = Agent(base_url, api_key, model)   
-        
-    def setInitialContext(self, context: str):
-        self.Agent_gen_README.context = context
-        
-    def request(self):
-        return self.Agent_gen_README.request_str()
-
-    def generate(self, msg: dict):
-        self.Agent_gen_README.payload = "<context>\n"
-        self.Agent_gen_README.payload += self.Agent_gen_README.context
-        self.Agent_gen_README.payload += "\n</context>\n"
-        self.Agent_gen_README.payload += "<json_code>\n"
-        self.Agent_gen_README.payload += json.dumps(msg, indent=2)
-        self.Agent_gen_README.payload += "\n</json_code>\n"
 
 
 def main():
-    api = generate_README()
+    api = README_gen()
 
     api.setInitialContext(
     """
@@ -58,21 +30,18 @@ def main():
     """
     )
     current_dir = os.getcwd()
-    dirAnalyser = JSON_gen()
+    dirAnalyser = JSON_gen(current_dir)
     
-    json_output = dirAnalyser.save_to_json(current_dir)
-    # print(json_output)
-    
-    api.generate(msg=json_output)
+    api.generate(msg=dirAnalyser.json_output)
     
     print("Processing main README.md")
     response = api.request()
     
-    file = "README.md"
-    with open(file, "w", encoding="utf-8") as arquivo:
-        arquivo.write(response)
+    file_name = "README.md"
+    with open(file_name, "w", encoding="utf-8") as file:
+        file.write(response)
 
-    print(f"File {file} created!")
+    print(f"File {file_name} created!")
 
 if __name__ == "__main__":
     main()

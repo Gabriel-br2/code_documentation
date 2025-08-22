@@ -4,7 +4,7 @@ from generate_summary import code_summary
 
 
 class JSON_gen:
-    def __init__(self, verbose=False, gitignore_path=".gitignore", venv_path=".venv_path"):
+    def __init__(self, path, verbose=False, gitignore_path=".gitignore", venv_path=".venv_path"):
         self.verbose = verbose
         self.gitignore_path = gitignore_path
         self.venv_path = venv_path
@@ -15,6 +15,8 @@ class JSON_gen:
         )
         
         self.counter = 0
+        self.save_to_json(path)
+
 
     def _is_in_gitignore(self, item):
         if not os.path.exists(self.gitignore_path):
@@ -117,7 +119,7 @@ class JSON_gen:
 
     def save_to_json(self, path):
         data = self.get_structure(path)
-        return json.dumps(data, indent=2, ensure_ascii=False)
+        self.json_output = json.dumps(data, indent=2, ensure_ascii=False)
     
     def debug_print(self, msg):
         if self.verbose:
