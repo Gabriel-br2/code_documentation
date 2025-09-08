@@ -84,7 +84,7 @@ class JSON_gen:
 
                     extension = os.path.splitext(item)[1]
                     
-                    if extension in [".py", ".txt", ".cpp", ".c", ".js", ".html"]:
+                    if extension in [".py", ".txt", ".cpp", ".c", ".js", ".html", ".ino", ".h", ".css"]:
                         content = self._summarize_file(item_path)
                     else:
                         content = "extension unreadable"
