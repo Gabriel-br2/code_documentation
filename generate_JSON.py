@@ -33,9 +33,6 @@ class JSON_gen:
         return item in ignores
 
     def _summarize_file(self, file_path):
-        extension = os.path.splitext(file_path)[1]
-        if extension not in [".py", ".txt", ".js", ".cpp", ".c"]:
-            return "Not readable file"
         try:
             with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
                 self.summary_gen.generate(f.read())
@@ -88,8 +85,7 @@ class JSON_gen:
                         content = self._summarize_file(item_path)
                     else:
                         content = "extension unreadable"
-
-
+                    
                     structure["children"].append({
                         "name": item,
                         "path": os.path.abspath(item_path),
