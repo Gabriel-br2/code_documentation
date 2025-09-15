@@ -1,30 +1,34 @@
 #!/usr/bin/env python
-import os
 import json
+import os
+
 from agent import Agent
 from dotenv import load_dotenv
+
 
 class code_summary:
     def __init__(self, verbose):
         load_dotenv()
         self.verbose = verbose
-        
+
         base_url = os.getenv("BASE_URL")
-        api_key  = os.getenv("API_KEY")
-        model    = os.getenv("MODEL")
-        
-        self.Agent_summary_gen = Agent(base_url, api_key, model)        
+        api_key = os.getenv("API_KEY")
+        model_local = "qwen:14b"
+
+        self.Agent_summary_gen = Agent(base_url, api_key, model_local)
 
     def setInitialContext(self, context: str):
         self.Agent_summary_gen.context = context
 
     def getReturnJsonPattern(self) -> dict:
         root = dict()
-        
+
         root["main_points"] = "The main points and general purpose of the file."
-        root["structure"] = "The main structure, such as important classes and functions."
+        root["structure"] = (
+            "The main structure, such as important classes and functions."
+        )
         root["functions"] = "A brief explanation of what each main function does."
-        
+
         return root
 
     def request(self):
@@ -34,7 +38,9 @@ class code_summary:
         self.Agent_summary_gen.payload = "<context>\n"
         self.Agent_summary_gen.payload += self.Agent_summary_gen.context
         self.Agent_summary_gen.payload += "\nFollow the bellow json to answer:\n"
-        self.Agent_summary_gen.payload += json.dumps(self.getReturnJsonPattern(), indent=2)
+        self.Agent_summary_gen.payload += json.dumps(
+            self.getReturnJsonPattern(), indent=2
+        )
         self.Agent_summary_gen.payload += "\n</context>\n"
         self.Agent_summary_gen.payload += "<file>\n"
         self.Agent_summary_gen.payload += json.dumps(msg, indent=2)

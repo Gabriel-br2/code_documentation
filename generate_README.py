@@ -1,25 +1,26 @@
 #!/usr/bin/env python
 import json
-from dotenv import load_dotenv
 import os
 
 from agent import Agent
+from dotenv import load_dotenv
 from generate_JSON import JSON_gen
+
 
 class README_gen:
     def __init__(self, verbose=False):
         load_dotenv()
         self.verbose = verbose
-        
-        base_url=os.getenv("BASE_URL")
-        api_key=os.getenv("API_KEY")
-        model = os.getenv("MODEL")
-        
-        self.Agent_gen_README = Agent(base_url, api_key, model)   
-        
+
+        base_url = os.getenv("BASE_URL")
+        api_key = os.getenv("API_KEY")
+        model_local = "qwen:14b"
+
+        self.Agent_gen_README = Agent(base_url, api_key, model_local)
+
     def setInitialContext(self, context: str):
         self.Agent_gen_README.context = context
-        
+
     def request(self):
         return self.Agent_gen_README.request_str()
 
