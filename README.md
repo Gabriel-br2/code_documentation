@@ -56,7 +56,7 @@ MODEL=your-model-here
 BASE_URL="https://openrouter.ai/api/v1"
 ```
 
-##### 🔧 Configuring the linux environment 
+#### 🔧 Configuring the linux environment 
 So you can run the tool in any repository on your computer:
 
 1. **Create a `.sh` file to run the Python script**:
