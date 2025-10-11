@@ -44,7 +44,7 @@ pip install -r ~/Your_path/code_doc/requirements.txt
 
 The project uses environment variables for configuration. Before running the generator, ensure the following variables are set in a .env file:
 
-- `OPENAI_API_KEY` – Your API key for the AI model.
+- `API_KEY` – Your API key for the AI model.
 - `MODEL` – Your LLM model for openRouter here.
 - `BASE_URL` – Custom base URL for API request
 
